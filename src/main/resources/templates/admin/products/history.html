@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Histórico de preços — Tabarato Demais</title><link rel="stylesheet" th:href="@{/css/admin.css}"></head>
+<body>
+<header class="admin-header"><a class="brand" href="/admin">TABARATO <strong>DEMAIS</strong></a></header>
+<main class="dashboard">
+  <a class="back-link" th:href="@{/admin/produtos/{id}/ofertas(id=${history.productId})}">← Voltar às ofertas</a>
+  <h1>Histórico de preços</h1>
+  <h2 th:text="${history.productName}"></h2>
+  <p class="muted" th:text="${history.storeName}"></p>
+  <p>Preço inicial e mudanças de preço registradas nesta oferta, da mais recente para a mais antiga. Valores sem frete.</p>
+  <p class="muted">As datas indicam quando o valor foi salvo no portal, no horário de Brasília. Não são as datas de início de uma promoção na loja. Edições sem mudança de preço não geram um novo registro.</p>
+  <p th:if="${history.total == 0}">Ainda não há registros de preço para esta oferta.</p>
+  <div class="table-scroll" th:if="${history.total > 0}">
+    <table><caption>Preços registrados nesta oferta</caption><thead><tr><th scope="col">Registrado em (Brasília)</th><th scope="col">Preço do produto</th></tr></thead>
+      <tbody><tr th:each="entry : ${history.entries}"><td th:text="${entry.recordedAt}"></td><td th:text="|R$ ${#numbers.formatDecimal(entry.price,1,'POINT',2,'COMMA')}|"></td></tr></tbody>
+    </table>
+  </div>
+  <p class="muted" th:text="|${history.total} registros · Página ${history.page} de ${history.pages}|"></p>
+  <nav class="form-actions" aria-label="Páginas do histórico" th:if="${history.pages > 1}">
+    <a class="button-link" th:if="${history.page > 1}" th:href="@{${historyUrl}(pagina=${history.page - 1})}">← Anterior</a>
+    <a class="button-link" th:if="${history.page < history.pages}" th:href="@{${historyUrl}(pagina=${history.page + 1})}">Próxima →</a>
+  </nav>
+</main>
+</body></html>

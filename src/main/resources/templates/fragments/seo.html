@@ -1,0 +1,20 @@
+<!doctype html><html xmlns:th="http://www.thymeleaf.org"><head>
+<th:block th:fragment="metadata(title, description, image)">
+  <title th:text="${title}"></title>
+  <meta name="description" th:content="${#strings.abbreviate(description,160)}">
+  <meta name="robots" th:content="${seo.robots}">
+  <link rel="canonical" th:href="${seo.canonical}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tabarato Demais">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" th:content="${title}">
+  <meta property="og:description" th:content="${#strings.abbreviate(description,160)}">
+  <meta property="og:url" th:content="${seo.canonical}">
+  <meta property="og:image" th:content="${image}">
+  <meta property="og:image:alt" th:content="${title}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" th:content="${title}">
+  <meta name="twitter:description" th:content="${#strings.abbreviate(description,160)}">
+  <meta name="twitter:image" th:content="${image}">
+</th:block>
+</head></html>

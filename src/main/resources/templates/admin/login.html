@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Entrar — Tabarato Demais</title><link rel="stylesheet" th:href="@{/css/admin.css}"></head>
+<body class="login-page">
+<main class="login-card">
+  <a class="brand" href="/">TABARATO <strong>DEMAIS</strong></a>
+  <p class="eyebrow">ÁREA ADMINISTRATIVA</p><h1>Entre para gerenciar<br>seu portal.</h1>
+  <p class="muted">Acesso exclusivo para administradores.</p>
+  <p class="notice error" role="alert" th:if="${param.error}">Não foi possível entrar. Confira suas credenciais e tente novamente.</p>
+  <p class="notice" role="status" th:if="${param.logout}">Você saiu da sua conta com segurança.</p>
+  <form th:action="@{/admin/login}" method="post">
+    <label for="email">E-mail</label><input id="email" name="email" type="email" maxlength="254" autocomplete="username" required autofocus>
+    <label for="password">Senha</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+    <button type="submit">Entrar no painel <span aria-hidden="true">→</span></button>
+  </form>
+  <a class="back-link" href="/">← Voltar ao site</a>
+</main>
+</body></html>

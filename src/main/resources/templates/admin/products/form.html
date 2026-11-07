@@ -1,0 +1,19 @@
+<!doctype html><html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Produto — Tabarato Demais</title><link rel="stylesheet" th:href="@{/css/admin.css}"></head><body>
+<header class="admin-header"><a class="brand" href="/admin">TABARATO <strong>DEMAIS</strong></a></header><main class="dashboard"><a class="back-link" href="/admin/produtos">← Voltar aos produtos</a><h1 th:text="${productId == null ? 'Novo produto' : 'Editar produto'}"></h1>
+<p class="notice" th:if="${#lists.isEmpty(categories)}">Antes de salvar um produto, <a class="edit-link" href="/admin/categorias/nova">cadastre uma categoria</a>.</p>
+<form class="category-form next-step" th:action="@{${formAction}}" method="post" th:object="${productForm}">
+<div class="notice error" role="alert" th:if="${#fields.hasAnyErrors()}"><ul><li th:each="e : ${#fields.allErrors()}" th:text="${e}"></li></ul></div>
+<label for="name">Nome do produto</label><input th:field="*{name}" required maxlength="200">
+<label for="slug">URL amigável</label><input th:field="*{slug}" required maxlength="220" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="galaxy-a17-256gb-preto">
+<label for="categoryId">Categoria do produto</label><select th:field="*{categoryId}" required><option value="">Escolha uma categoria</option><option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.parentName == null ? c.name : c.parentName + ' → ' + c.name}"></option></select>
+<p class="muted field-help">Escolha uma das categorias prontas. Para criar outras ou subcategorias, use <a class="edit-link" href="/admin/categorias" target="_blank" rel="noopener">Gerenciar categorias ↗</a>.</p>
+<label for="brand">Marca</label><input th:field="*{brand}" required maxlength="100">
+<label for="model">Modelo exato</label><input th:field="*{model}" required maxlength="150">
+<label for="variant">Versão e características</label><input th:field="*{variant}" required maxlength="150" placeholder="Memória, RAM, cor, tamanho, conectividade…">
+<p class="muted field-help">As ofertas deste cadastro devem corresponder a esta mesma versão.</p>
+<label for="imageUrl">Endereço da imagem (HTTPS)</label><input th:field="*{imageUrl}" type="url" required maxlength="2048" placeholder="https://…/foto.jpg" aria-describedby="image-help">
+<p id="image-help" class="muted field-help">Use o endereço direto de uma imagem que você tenha autorização para divulgar. O link de afiliado vai no cadastro da oferta. Nesta etapa não há upload nem importação automática.</p>
+<label for="description">Descrição (opcional)</label><textarea th:field="*{description}" rows="4" maxlength="5000"></textarea>
+<label for="status">Publicação</label><select th:field="*{status}"><option value="DRAFT">Rascunho</option><option value="PUBLISHED">Publicado</option><option value="ARCHIVED">Arquivado</option></select>
+<p class="muted field-help">Primeiro salve como rascunho, adicione uma oferta ativa e então publique. Arquivar retira o produto da página pública.</p>
+<div class="form-actions"><button>Salvar produto</button><a class="back-link" href="/admin/produtos">Cancelar</a></div></form></main></body></html>

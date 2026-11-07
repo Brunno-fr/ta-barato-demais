@@ -1,0 +1,19 @@
+<!doctype html><html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Oferta — Tabarato Demais</title><link rel="stylesheet" th:href="@{/css/admin.css}"></head><body>
+<header class="admin-header"><a class="brand" href="/admin">TABARATO <strong>DEMAIS</strong></a></header><main class="dashboard"><a class="back-link" th:href="@{/admin/produtos/{id}/ofertas(id=${product.id})}">← Voltar às ofertas</a><h1 th:text="${offerId == null ? 'Nova oferta' : 'Editar oferta'}"></h1><p th:text="|${product.name} · ${product.variant}|"></p>
+<form class="category-form next-step" th:action="@{${formAction}}" method="post" th:object="${offerForm}">
+<div class="notice error" role="alert" th:if="${#fields.hasAnyErrors()}"><ul><li th:each="e : ${#fields.allErrors()}" th:text="${e}"></li></ul></div>
+<input type="hidden" th:field="*{version}">
+<label for="storeSlug">Loja</label><select th:field="*{storeSlug}" required><option value="">Selecione</option><option value="mercado-livre">Mercado Livre</option><option value="shopee">Shopee</option></select>
+<label for="affiliateUrl">Link de afiliado do produto</label><input th:field="*{affiliateUrl}" type="url" required maxlength="2048" placeholder="https://meli.la/… ou link da Shopee">
+<p class="muted field-help">Cole o link gerado pelo programa de afiliados. Ele será preservado e usado diretamente no botão “Ver oferta”. Confira se abre o produto e a versão corretos.</p>
+<label for="price">Preço atual (R$)</label><input th:field="*{price}" type="number" required min="0.01" max="9999999999.99" step="0.01">
+<label for="shippingType">Frete</label><select th:field="*{shippingType}" aria-describedby="shipping-help"><option value="UNKNOWN">Não informado</option><option value="FREE">Frete grátis</option><option value="PAID">Frete com valor</option></select>
+<div id="shipping-value"><label for="shippingCost">Valor do frete (R$)</label><input th:field="*{shippingCost}" type="number" min="0.01" max="9999999999.99" step="0.01"></div>
+<p id="shipping-help" class="muted field-help">Preencha o valor apenas para frete pago. Se escolher frete grátis, informe nas condições de compra eventuais restrições de região ou valor mínimo.</p>
+<label for="purchaseConditions">Condições de compra (opcional)</label><textarea th:field="*{purchaseConditions}" rows="3" maxlength="2000" placeholder="Forma de pagamento, cupom, região ou condições verificadas"></textarea>
+<label for="checkedAt">Última conferência — horário de Brasília</label><input th:field="*{checkedAt}" type="datetime-local" required>
+<label class="checkbox-label"><input th:field="*{active}" type="checkbox"> Oferta ativa — conferi o preço, o link e a versão do produto</label>
+<label class="checkbox-label"><input th:field="*{featured}" type="checkbox"> Destacar na página inicial</label>
+<p class="muted field-help">O destaque aparece somente com a oferta ativa e o produto publicado. A página inicial mostra até seis ofertas marcadas, priorizando as conferidas mais recentemente. Desmarque para retirar o destaque.</p>
+<p class="muted field-help">Alterações de preço são registradas no histórico. Nenhum desconto ou avaliação é calculado a partir de dados não comprovados.</p>
+<div class="form-actions"><button>Salvar oferta</button><a class="back-link" th:href="@{/admin/produtos/{id}/ofertas(id=${product.id})}">Cancelar</a></div></form></main><script src="/js/offer-form.js" defer></script></body></html>

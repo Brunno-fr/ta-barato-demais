@@ -1,0 +1,14 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const path = require('node:path');
+const type = {value:'UNKNOWN', addEventListener(event,fn){this.change=fn;}};
+const field = {}, input = {};
+const document = {querySelector(selector){return {'#shippingType':type,'#shipping-value':field,'#shippingCost':input}[selector];}};
+vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../../main/resources/static/js/offer-form.js'),'utf8'),{document});
+assert.equal(field.hidden,true); assert.equal(input.disabled,true);
+type.value='PAID';type.change();
+assert.equal(field.hidden,false);assert.equal(input.required,true);assert.equal(input.disabled,false);
+type.value='FREE';type.change();
+assert.equal(field.hidden,true);assert.equal(input.required,false);assert.equal(input.disabled,true);
+console.log('Frete: seleção de não informado, pago e grátis aprovada.');

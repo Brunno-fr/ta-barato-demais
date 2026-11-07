@@ -1,0 +1,21 @@
+<!doctype html><html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Editar ranking — Tabarato Demais</title><link rel="stylesheet" href="/css/admin.css"></head><body>
+<header class="admin-header"><a class="brand" href="/admin">TABARATO <strong>DEMAIS</strong></a></header>
+<main class="dashboard"><a class="back-link" href="/admin/rankings">← Voltar aos rankings</a><h1>Ranking editorial</h1>
+<p>Explique os critérios e o motivo de cada indicação. Não invente avaliações nem declare um produto como melhor sem evidências.</p>
+<form class="category-form next-step" th:action="@{${formAction}}" method="post" th:object="${rankingForm}">
+<div class="notice error" role="alert" th:if="${#fields.hasAnyErrors()}"><ul><li th:each="e : ${#fields.allErrors()}" th:text="${e}"></li></ul></div>
+<input type="hidden" th:field="*{version}">
+<label for="title">Título</label><input th:field="*{title}" required maxlength="160">
+<label for="slug">URL amigável</label><input th:field="*{slug}" required maxlength="180" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="fones-para-estudar">
+<label for="description">Descrição</label><textarea th:field="*{description}" maxlength="2000" rows="3"></textarea>
+<label for="criteria">Critérios e fontes da seleção</label><textarea th:field="*{criteria}" required maxlength="3000" rows="5" placeholder="Explique público-alvo, critérios, limitações e fontes consultadas."></textarea>
+<h2>Produtos e posições</h2><p class="muted">Até 10 posições. Escolha produtos diferentes em cada posição e justifique a indicação. Deixe vazias as posições que não usar. Para mudar a ordem, troque o produto e sua justificativa entre as posições. Para publicar, selecione pelo menos dois produtos publicados.</p>
+<fieldset th:each="item, s : *{items}"><legend th:text="|Posição ${s.count}|"></legend>
+<label th:for="|items${s.index}.productId|">Produto</label>
+<select th:field="*{items[__${s.index}__].productId}"><option value="">Não usar esta posição</option><option th:each="p : ${products}" th:value="${p.id}" th:text="|${p.name} · ${p.model} · ${p.variant} (${p.status})|"></option></select>
+<label th:for="|items${s.index}.reason|">Por que indicar este produto?</label><textarea th:field="*{items[__${s.index}__].reason}" maxlength="1000" rows="3"></textarea>
+</fieldset>
+<label class="checkbox-label"><input type="checkbox" th:field="*{published}"> Publicar ranking</label>
+<p class="muted">Desmarque para salvar como rascunho ou retirar a página do ar. Produtos arquivados serão ocultados do ranking público, preservando as posições editoriais.</p>
+<div class="form-actions"><button>Salvar ranking</button><a href="/admin/rankings">Cancelar</a></div>
+</form></main></body></html>

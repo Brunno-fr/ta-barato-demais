@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Categoria — Tabarato Demais</title><link rel="stylesheet" th:href="@{/css/admin.css}"></head>
+<body>
+<header class="admin-header"><a class="brand" th:href="@{/admin}">TABARATO <strong>DEMAIS</strong></a><form th:action="@{/admin/logout}" method="post"><button class="secondary" type="submit">Sair da conta</button></form></header>
+<main class="dashboard">
+  <a class="back-link" th:href="@{/admin/categorias}">← Voltar às categorias</a>
+  <h1 th:text="${categoryId == null ? 'Nova categoria' : 'Editar categoria'}"></h1>
+  <form class="category-form next-step" th:action="@{${formAction}}" method="post" th:object="${categoryForm}">
+    <div class="notice error" role="alert" th:if="${#fields.hasAnyErrors()}"><p>Confira os dados antes de salvar:</p><ul><li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li></ul></div>
+    <label for="name">Nome</label><input id="name" th:field="*{name}" maxlength="100" required autocomplete="off" placeholder="Ex.: Eletrônicos">
+    <label for="slug">URL amigável</label><input id="slug" th:field="*{slug}" maxlength="140" required pattern="[a-z0-9]+(-[a-z0-9]+)*" aria-describedby="slug-help" placeholder="Ex.: eletronicos">
+    <p id="slug-help" class="muted field-help">Identificador único: use letras minúsculas sem acentos, números e hífens. Exemplo: fones-de-ouvido.</p>
+    <label for="parentId">Categoria principal (opcional)</label>
+    <select id="parentId" th:field="*{parentId}" aria-describedby="parent-help"><option value="">Nenhuma — esta é uma categoria principal</option><option th:each="parent : ${parents}" th:value="${parent.id}" th:text="|${parent.name} (${parent.slug})|"></option></select>
+    <p id="parent-help" class="muted field-help">Para criar uma subcategoria, selecione a categoria à qual ela pertence.</p>
+    <div class="form-actions"><button type="submit">Salvar categoria</button><a class="back-link" th:href="@{/admin/categorias}">Cancelar</a></div>
+  </form>
+</main></body></html>

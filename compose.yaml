@@ -1,0 +1,19 @@
+name: tabaratodemais
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: tabaratodemais
+      POSTGRES_USER: tabaratodemais
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Execute scripts/banco.ps1 para configurar o ambiente}
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tabaratodemais -d tabaratodemais"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+volumes:
+  postgres_data:

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Categorias — Tabarato Demais</title><link rel="stylesheet" th:href="@{/css/admin.css}"></head>
+<body>
+<header class="admin-header"><a class="brand" th:href="@{/admin}">TABARATO <strong>DEMAIS</strong></a><form th:action="@{/admin/logout}" method="post"><button class="secondary" type="submit">Sair da conta</button></form></header>
+<main class="dashboard">
+  <a class="back-link" th:href="@{/admin}">← Voltar ao painel</a>
+  <p class="eyebrow">CATÁLOGO</p><h1>Categorias</h1>
+  <p class="muted">Organize seus produtos em categorias e subcategorias.</p>
+  <p class="notice" role="status" th:if="${success}" th:text="${success}"></p>
+  <a class="button-link" th:href="@{/admin/categorias/nova}">Nova categoria</a>
+  <section class="next-step" th:if="${#lists.isEmpty(categories)}"><h2>Nenhuma categoria cadastrada</h2><p>Comece com uma categoria principal, como Eletrônicos. Depois, cadastre suas subcategorias.</p></section>
+  <div class="table-scroll" th:unless="${#lists.isEmpty(categories)}">
+    <table><caption class="muted">Categorias cadastradas, em ordem alfabética</caption>
+      <thead><tr><th scope="col">Nome</th><th scope="col">URL amigável</th><th scope="col">Categoria principal</th><th scope="col">Ação</th></tr></thead>
+      <tbody><tr th:each="category : ${categories}"><td th:text="${category.name}"></td><td th:text="${category.slug}"></td><td th:text="${category.parentName ?: 'Sem categoria principal'}"></td><td><a class="edit-link" th:href="@{/admin/categorias/{id}/editar(id=${category.id})}" th:aria-label="|Editar ${category.name}|">Editar</a></td></tr></tbody>
+    </table>
+  </div>
+</main></body></html>

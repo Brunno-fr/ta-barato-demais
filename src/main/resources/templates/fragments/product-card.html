@@ -1,0 +1,10 @@
+<!doctype html><html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"><body>    <article class="product-card" th:fragment="card(card)" th:attr="data-groups=${card.groups},data-title=${card.name + ' ' + card.details + ' ' + card.category}">
+      <p class="card-caption" th:text="${card.category}"></p>
+      <a th:href="@{/produtos/{slug}(slug=${card.slug})}"><img class="product-photo" th:src="${card.image}" th:alt="${card.name}" loading="lazy" referrerpolicy="no-referrer" width="240" height="200"></a>
+      <h3><a th:href="@{/produtos/{slug}(slug=${card.slug})}" th:text="${card.name}"></a></h3><p class="card-caption" th:text="${card.details}"></p>
+      <div class="real-offer" th:each="deal : ${card.deals}">
+        <span class="store-name" th:classappend="${deal.store == 'Shopee' ? 'orange' : ''}" th:text="${deal.store}"></span>
+        <div class="price-area"><strong th:text="${deal.price}"></strong><small th:text="${deal.shipping}"></small><small th:if="${deal.conditions}" th:text="${deal.conditions}"></small><small th:text="|Conferido: ${deal.checkedAt}|"></small></div>
+        <a class="offer-button" th:href="${deal.url}" target="_blank" rel="sponsored nofollow noopener noreferrer" th:aria-label="|Ver oferta de ${card.name} em ${deal.store}|">Ver oferta ↗</a>
+      </div>
+    </article></body></html>

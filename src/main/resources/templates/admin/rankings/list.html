@@ -1,0 +1,6 @@
+<!doctype html><html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Rankings — Painel</title><link rel="stylesheet" href="/css/admin.css"></head><body>
+<header class="admin-header"><a class="brand" href="/admin">TABARATO <strong>DEMAIS</strong></a></header><main class="dashboard"><a href="/admin">← Voltar ao painel</a><h1>Rankings editoriais</h1>
+<p class="notice" role="status" th:if="${success}" th:text="${success}"></p><a class="button-link" href="/admin/rankings/novo">Novo ranking</a>
+<p th:if="${#lists.isEmpty(rankings)}">Nenhum ranking cadastrado.</p>
+<div class="table-scroll" th:unless="${#lists.isEmpty(rankings)}"><table><thead><tr><th>Título</th><th>Status</th><th>Ações</th></tr></thead><tbody><tr th:each="r : ${rankings}"><td th:text="${r.title}"></td><td th:text="${r.published ? 'Publicado' : 'Rascunho'}"></td><td><a th:href="@{/admin/rankings/{id}/editar(id=${r.id})}">Editar</a> <a th:if="${r.published}" th:href="@{/rankings/{slug}(slug=${r.slug})}">Ver página pública →</a></td></tr></tbody></table></div>
+</main></body></html>

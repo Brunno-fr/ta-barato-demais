@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Painel — Tabarato Demais</title><link rel="stylesheet" th:href="@{/css/admin.css}"></head>
+<body>
+<header class="admin-header"><a class="brand" href="/">TABARATO <strong>DEMAIS</strong></a><form th:action="@{/admin/logout}" method="post"><button class="secondary" type="submit">Sair da conta</button></form></header>
+<main class="dashboard">
+  <p class="eyebrow">PAINEL ADMINISTRATIVO</p><h1>Bem-vindo ao seu portal.</h1>
+  <p class="muted">Conectado como <strong th:text="${email}"></strong></p>
+  <section class="status-panel"><span class="status-dot" aria-hidden="true"></span><div><h2>Seu acesso está protegido</h2><p>Esta área é exclusiva para a administração do Tabarato Demais.</p></div></section>
+  <section class="next-step"><p class="eyebrow">CATÁLOGO</p><h2>Organizar as categorias</h2><p>Cadastre e edite categorias e subcategorias para organizar seus futuros produtos.</p><a class="button-link" th:href="@{/admin/categorias}">Gerenciar categorias →</a></section>
+  <section class="next-step"><p class="eyebrow">PRODUTOS E OFERTAS</p><h2>Publicar produtos com seus links</h2><p>Cadastre foto, categoria e versão do produto. Adicione ofertas do Mercado Livre e da Shopee.</p><a class="button-link" href="/admin/produtos">Gerenciar produtos e ofertas →</a></section>
+  <section class="next-step"><p class="eyebrow">SELEÇÃO EDITORIAL</p><h2>Rankings de produtos</h2><p>Organize produtos por critérios claros e explique cada indicação.</p><a class="button-link" href="/admin/rankings">Gerenciar rankings →</a></section>
+  <p><a class="back-link" href="/">Ver a página pública →</a></p>
+</main>
+</body></html>

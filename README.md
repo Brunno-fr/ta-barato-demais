@@ -83,4 +83,3 @@ Produtos, categorias e ofertas s√£o cadastrados manualmente no painel. A aplica√
 - [SEO](docs/SEO.md)
 - [Backups](docs/BACKUP.md)
 - [Plano do projeto](docs/PLANO.md)
-

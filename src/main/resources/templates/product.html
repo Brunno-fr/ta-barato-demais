@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8">
+<th:block th:replace="~{fragments/seo :: metadata(${product.name + ' — Compare ofertas no Tabarato Demais'}, ${'Compare ofertas de ' + product.name + ' · ' + product.model + ' · ' + product.variant + '. Confira preço, frete e condições na loja.'}, ${product.image != null and product.image != '' ? product.image : seo.image})}"></th:block>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/site.css"><link rel="stylesheet" href="/css/product.css">
+</head>
+<body>
+<a class="skip-link" href="#produto">Pular para o produto</a>
+<header class="site-header"><div class="container header-row">
+  <a class="brand" href="/" aria-label="Tabarato Demais, início"><img src="/images/brand.png" alt="Tabarato Demais" width="1774" height="887"></a>
+  <nav aria-label="Principal"><a href="/#destaques">Todos os produtos</a><a href="#ofertas">Comparar ofertas</a></nav>
+</div></header>
+<main class="container product-page" id="produto">
+  <nav class="breadcrumb" aria-label="Navegação estrutural"><a href="/">Início</a><span aria-hidden="true"> / </span><span th:text="${product.category}"></span></nav>
+  <section class="product-summary" aria-labelledby="product-name">
+    <div class="detail-photo"><img th:src="${product.image}" th:alt="${product.name}" referrerpolicy="no-referrer" width="600" height="500"></div>
+    <div><p class="eyebrow" th:text="${product.category}"></p><h1 id="product-name" th:text="${product.name}"></h1>
+      <dl class="specifications"><div><dt>Marca</dt><dd th:text="${product.brand}"></dd></div><div><dt>Modelo</dt><dd th:text="${product.model}"></dd></div><div><dt>Versão</dt><dd th:text="${product.variant}"></dd></div></dl>
+      <a class="compare-button" href="#ofertas">Ver ofertas disponíveis</a>
+      <p class="comparison-note">Compare esta mesma versão em cada anúncio. A compra é realizada diretamente no marketplace.</p>
+    </div>
+  </section>
+  <section class="product-description" th:if="${!#strings.isEmpty(product.description)}" aria-labelledby="description-title"><h2 id="description-title">Sobre o produto</h2><p th:text="${product.description}"></p></section>
+  <section id="ofertas" class="comparison" aria-labelledby="offers-title">
+    <h2 id="offers-title">Compare as ofertas</h2>
+    <p class="comparison-note">Ofertas ordenadas pelo preço do produto, sem incluir o frete. Preços são conferidos manualmente e podem mudar.</p>
+    <p class="no-offers" th:if="${#lists.isEmpty(product.deals)}">Não há ofertas ativas para este produto no momento. Volte mais tarde para conferir.</p>
+    <div class="comparison-list">
+      <article class="comparison-offer" th:each="deal : ${product.deals}">
+        <div><h3 th:text="${deal.store}"></h3><p class="checked-date" th:text="|Conferido: ${deal.checkedAt}|"></p></div>
+        <div><strong class="comparison-price" th:text="${deal.price}"></strong><p th:text="${deal.shipping}"></p></div>
+        <div class="purchase-conditions"><h4>Condições de compra</h4><p th:text="${#strings.isEmpty(deal.conditions) ? 'Condições adicionais não informadas. Confira na loja.' : deal.conditions}"></p></div>
+        <a class="compare-button" th:href="${deal.url}" target="_blank" rel="sponsored nofollow noopener noreferrer" th:aria-label="|Ver oferta de ${product.name} em ${deal.store}|">Ver oferta ↗</a>
+      </article>
+    </div>
+  </section>
+  <aside class="disclosure"><h2>Transparência</h2><p>O Tabarato Demais poderá receber comissão por compras realizadas por links de afiliados. Confirme preço, frete, versão e disponibilidade no marketplace antes de comprar.</p></aside>
+  <p><a class="back-to-catalog" href="/#destaques">← Voltar aos produtos</a></p>
+</main>
+<footer class="container"><span>Tabarato Demais</span><span>Compare com informação. Escolha com confiança.</span></footer>
+</body></html>
